@@ -25,6 +25,66 @@ python3 -m http.server 8080
 
 **Requires:** Chrome, Edge, or another Chromium-based browser. Web Bluetooth is not available in Firefox or Safari. Android Chrome is supported with full touch UI; iOS is not supported. PM-241 printers require USB (WebUSB).
 
+## Desktop App (Electron)
+
+If you prefer a standalone desktop app (no Chrome installation required), run with Electron:
+
+```bash
+npm install
+npm run dev:electron
+```
+
+This runs the same `src/web` UI inside Electron's embedded Chromium runtime.
+
+### Packaging
+
+Build distributables for Linux (AppImage) and Windows:
+
+```bash
+npm run build:electron
+```
+
+Artifacts are generated under `dist/`.
+
+Additional build targets:
+
+```bash
+# Linux only (AppImage)
+npm run build:electron:linux
+
+# Windows portable only
+npm run build:electron:win:portable
+
+# Windows installer (NSIS)
+npm run build:electron:win:installer
+```
+
+### CI/CD release automation
+
+The workflow `.github/workflows/desktop-release.yml` builds desktop artifacts for:
+
+- Linux (`AppImage`)
+- Windows (`portable` + `NSIS` installer)
+
+How to use:
+
+1. Push a tag like `v1.2.3` to trigger build + GitHub Release asset upload.
+2. Or run **Desktop Build & Release** manually from GitHub Actions (`workflow_dispatch`).
+
+Run desktop unit/smoke checks:
+
+```bash
+npm run test:unit
+# Optional real Electron boot smoke:
+RUN_ELECTRON_SMOKE=1 npm run test:unit
+```
+
+### Desktop permission notes
+
+- Bluetooth device selection is handled by Electron dialogs.
+- USB device grants are persisted per app origin in Electron user data.
+- If a printer is not listed, reconnect the device and retry the selection flow.
+
 ## Features
 
 **Design Elements** - Text (multiple fonts including local system fonts, sizes, styles, alignment, background colors), images with scale/aspect lock, barcodes (Code128, EAN-13, UPC-A, Code39), QR codes, and shapes (rectangle, ellipse, triangle, line) with solid, dithered grayscale, and stroke fills.
@@ -103,6 +163,14 @@ When the Bluetooth device picker appears, select the device showing a **signal s
 
 ```
 phomymo/
+├── .github/
+│   └── workflows/
+│       └── desktop-release.yml # Build/release AppImage + Windows artifacts
+├── electron/
+│   ├── main.js          # Electron main process (desktop runtime)
+│   ├── preload.js       # Safe renderer bridge
+│   ├── staticServer.js  # Local static server for src/web
+│   └── devicePermissions.js # Persisted USB grants
 ├── src/
 │   └── web/
 │       ├── index.html     # Main UI
@@ -121,6 +189,11 @@ phomymo/
 │           ├── bindings.js   # Event binding helpers
 │           ├── errors.js     # Error handling
 │           └── validation.js # Input validation
+├── tests/
+│   └── node/
+│       ├── device-permissions.test.js
+│       ├── static-server.test.js
+│       └── electron-smoke.test.js
 └── README.md
 ```
 

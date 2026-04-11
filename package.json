@@ -2,11 +2,19 @@
   "name": "phomymo",
   "version": "1.0.0",
   "description": "A free, browser-based label designer for Phomemo thermal printers. No drivers needed - connects via Bluetooth or USB.",
-  "main": "index.js",
+  "main": "electron/main.js",
   "scripts": {
+    "dev:web": "python3 -m http.server 8080 --directory src/web",
+    "dev:electron": "electron .",
+    "test:unit": "node --test tests/node/**/*.test.js",
     "test": "npx playwright test",
     "test:headed": "npx playwright test --headed",
-    "manual:screenshots": "npx playwright test"
+    "manual:screenshots": "npx playwright test",
+    "build:electron": "electron-builder --linux AppImage --win portable",
+    "build:electron:linux": "electron-builder --linux AppImage",
+    "build:electron:win:portable": "electron-builder --win portable",
+    "build:electron:win:installer": "electron-builder --win nsis",
+    "build:electron:all": "electron-builder --linux AppImage --win portable nsis"
   },
   "repository": {
     "type": "git",
@@ -24,6 +32,38 @@
     "puppeteer": "^24.37.2"
   },
   "devDependencies": {
-    "@playwright/test": "^1.58.2"
+    "@playwright/test": "^1.58.2",
+    "electron": "^37.2.1",
+    "electron-builder": "^26.0.12"
+  },
+  "build": {
+    "appId": "net.affordablemagic.phomymo",
+    "productName": "Phomymo",
+    "files": [
+      "src/web/**/*",
+      "electron/**/*",
+      "package.json"
+    ],
+    "directories": {
+      "output": "dist"
+    },
+    "linux": {
+      "target": [
+        "AppImage"
+      ],
+      "category": "Graphics",
+      "artifactName": "${productName}-${version}-linux-${arch}.${ext}"
+    },
+    "win": {
+      "target": [
+        "portable"
+      ],
+      "artifactName": "${productName}-${version}-win-${arch}-${target}.${ext}"
+    },
+    "nsis": {
+      "oneClick": false,
+      "allowToChangeInstallationDirectory": true,
+      "perMachine": false
+    }
   }
 }
