@@ -10,6 +10,9 @@ const {
 
 const BLUETOOTH_NAME_PREFIXES = ['M', 'D', 'P', 'Q', 'T', 'A', 'Mr.in', 'Phomemo'];
 
+// Enable Web Bluetooth in Electron runtime.
+app.commandLine.appendSwitch('enable-experimental-web-platform-features');
+
 let staticServerHandle = null;
 let mainWindow = null;
 let grantedUSBDevicesByOrigin = {};

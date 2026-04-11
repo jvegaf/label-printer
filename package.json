@@ -5,7 +5,7 @@
   "main": "electron/main.js",
   "scripts": {
     "dev:web": "python3 -m http.server 8080 --directory src/web",
-    "dev:electron": "electron .",
+    "dev:electron": "node node_modules/electron/install.js && electron .",
     "test:unit": "node --test tests/node/**/*.test.js",
     "test": "npx playwright test",
     "test:headed": "npx playwright test --headed",
