@@ -25,6 +25,30 @@ python3 -m http.server 8080
 
 **Requires:** Chrome, Edge, or another Chromium-based browser. Web Bluetooth is not available in Firefox or Safari. Android Chrome is supported with full touch UI; iOS is not supported. PM-241 printers require USB (WebUSB).
 
+## Development Commands (Just)
+
+This project includes a `justfile` to standardize common development tasks.
+
+### Prerequisites
+
+- [just](https://github.com/casey/just)
+- Node.js + npm
+
+### Common commands
+
+```bash
+just                # List available recipes
+just install        # Install dependencies
+just serve          # Start local server at http://localhost:8080
+just test           # Run Playwright E2E tests
+just test-headed    # Run Playwright with visible browser
+just screenshots    # Run screenshot/manual flow tests
+just check          # Run project checks
+just ci             # Run CI-local pipeline
+```
+
+Under the hood, test and workflow commands are driven through npm scripts (`npm run ...`) so editor/CI behavior remains consistent.
+
 ## Features
 
 **Design Elements** - Text (multiple fonts including local system fonts, sizes, styles, alignment, background colors), images with scale/aspect lock, barcodes (Code128, EAN-13, UPC-A, Code39), QR codes, and shapes (rectangle, ellipse, triangle, line) with solid, dithered grayscale, and stroke fills.
