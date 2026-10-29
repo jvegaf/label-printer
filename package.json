@@ -14,7 +14,9 @@
     "build:electron:linux": "electron-builder --linux AppImage",
     "build:electron:win:portable": "electron-builder --win portable",
     "build:electron:win:installer": "electron-builder --win nsis",
-    "build:electron:all": "electron-builder --linux AppImage --win portable nsis"
+    "build:electron:all": "electron-builder --linux AppImage --win portable nsis",
+    "ci": "npm run check",
+    "check": "npm run test"
   },
   "repository": {
     "type": "git",
