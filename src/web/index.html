@@ -407,6 +407,10 @@
               <input type="checkbox" id="custom-round" class="w-3.5 h-3.5 rounded border-gray-300 text-blue-600 focus:ring-blue-500">
               <span class="text-xs text-gray-500">Round</span>
             </label>
+            <label id="custom-continuous-wrap" class="hidden flex items-center gap-1 ml-1 cursor-pointer">
+              <input type="checkbox" id="custom-continuous" class="w-3.5 h-3.5 rounded border-gray-300 text-blue-600 focus:ring-blue-500">
+              <span class="text-xs text-gray-500">Continuous</span>
+            </label>
           </div>
         </div>
       </div>
@@ -1290,6 +1294,7 @@
         <div>
           <div class="prop-label">Feed After Print</div>
           <select id="print-feed" class="prop-input">
+            <option value="0">None (no gap)</option>
             <option value="16">Small (2mm)</option>
             <option value="32" selected>Medium (4mm)</option>
             <option value="48">Large (6mm)</option>
@@ -1898,6 +1903,10 @@
               <input type="checkbox" id="mobile-custom-round" class="w-5 h-5 rounded border-gray-300 text-blue-600 focus:ring-blue-500">
               <span class="text-base text-gray-600">Round/Circle label</span>
             </label>
+            <label id="mobile-custom-continuous-wrap" class="hidden flex items-center gap-2 mt-2 cursor-pointer">
+              <input type="checkbox" id="mobile-custom-continuous" class="w-5 h-5 rounded border-gray-300 text-blue-600 focus:ring-blue-500">
+              <span class="text-base text-gray-600">Continuous tape</span>
+            </label>
           </div>
         </div>
 
@@ -2134,7 +2143,7 @@
     pdfjsModule.GlobalWorkerOptions.workerSrc = 'https://cdnjs.cloudflare.com/ajax/libs/pdf.js/4.0.379/pdf.worker.min.mjs';
     window.pdfjsLib = pdfjsModule;
   </script>
-  <script type="module" src="app.js?v=146"></script>
+  <script type="module" src="app.js?v=151"></script>
   <script>
     // Show body once styles are ready
     requestAnimationFrame(() => {
